@@ -14,3 +14,8 @@ def basic_calculations(num1, num2, operation):
         case _:
             return "Check your input! Try again."
 
+def even_numbers_list(list_of_nums):
+    return [num for num in list_of_nums if num %2==0]
+
+
+
