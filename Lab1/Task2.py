@@ -1,14 +1,15 @@
+import const
 def basic_calculations(num1, num2,
                       operation):
     operation = operation.lower()
     match operation:
-        case "add":
+        case const.add_func:
             return num1 + num2
-        case "sub":
+        case const.sub_func:
             return num1 - num2
-        case "mult":
+        case const.mul_func:
             return num1 * num2
-        case "div":
+        case const.div_func:
             if num2 == 0:
                 return "Infinity"
             return num1 / num2
