@@ -18,9 +18,27 @@ def analyse_sentences(sents):
     return non_declaratives
 
 
+def remove_abbreviations(sents):
+    new_sents = sents
+    for index, sent in enumerate(sents):
+        for abbr in abbreviations:
+            sent = sent.replace(abbr, "")
+        new_sents[index] = sent
+    return new_sents
 
 
-
+def find_n_gramms(sent, N, K):
+    n_grams: dict[str, int] = {}
+    grams = re.findall(regular_abbreviations + r'|(?=\w).*?(?=\W)', sent, re.IGNORECASE)
+    for i in range(len(grams) - N + 1):
+        n_gram = ' '.join(x for x in grams[i:i + N])
+        if n_gram in n_grams:
+            n_grams[n_gram] += 1
+        else:
+            n_grams[n_gram] = 1
+    # sorting dictionary and builting top-k
+    n_grams = sorted(n_grams.items(), reverse=True, key=lambda item: item[1])[:K]
+    return n_grams
 
 
 def Task1( string, n, k):
@@ -40,7 +58,7 @@ def Task1( string, n, k):
         sentences[ind] = sent[0]
 
     nd = analyse_sentences(sentences)
-
+    sentences = remove_abbreviations(sentences)
 
 
     for sent in sentences:
@@ -53,6 +71,8 @@ def Task1( string, n, k):
         average_sentence = total_length/len(sentences)
         average_words = total_length/total_words
 
+    four_grams = find_n_gramms(string, n, k)
+    print(four_grams)
 
     print("\n\nAverage word length: " + str(average_words))
     print("Average sentence length: " + str(average_sentence))
