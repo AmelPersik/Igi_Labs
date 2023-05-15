@@ -1,4 +1,5 @@
 from Task1 import Task1
+from Task2 import CLI
 
 print("task1\n\n")
 task1_txt = "Once, there was a boy who became bored when he " \
@@ -11,3 +12,7 @@ k = 10
 
 Task1(task1_txt,n,k)
 
+print("\n\n\ntask2\n\n")
+
+cli = CLI()
+cli.start()

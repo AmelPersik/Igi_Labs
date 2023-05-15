@@ -3,7 +3,7 @@ import re
 import json
 
 
-class ContainerUE:
+class Container:
     def __init__(self):
         self.container = set()
 
