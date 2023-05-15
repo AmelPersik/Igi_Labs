@@ -77,7 +77,7 @@ def Task1( string, n, k):
     print("\n\nAverage word length: " + str(average_words))
     print("Average sentence length: " + str(average_sentence))
 
-    return len(sentences), nd, average_sentence, average_words
+    return len(sentences), nd, average_sentence, average_words, four_grams
 
 print("task1\n\n")
 task1_text = 'Abc... Abc?! Abc!!! Mr. Abc: Abc, Abc. Mr., Abc?! Hello. My Name is Dasha. Hagimemashite!! '
