@@ -46,8 +46,6 @@ def Task1( string, n, k):
     if string == "":
         return 0, 0, 0, 0, default_dict
 
-
-
     average_words = 0.0
     average_sentence = 0.0
     total_words = 0
