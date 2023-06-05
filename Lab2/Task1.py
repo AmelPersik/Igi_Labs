@@ -36,12 +36,13 @@ def find_n_gramms(sent, N, K):
             n_grams[n_gram] += 1
         else:
             n_grams[n_gram] = 1
+
     # sorting dictionary and builting top-k
     n_grams = sorted(n_grams.items(), reverse=True, key=lambda item: item[1])[:K]
     return n_grams
 
 
-def Task1( string, n, k):
+def Task1(string, n, k):
     default_dict: dict[str, int] = {}
     if string == "":
         return 0, 0, 0, 0, default_dict
@@ -70,17 +71,48 @@ def Task1( string, n, k):
         average_words = total_length/total_words
 
     four_grams = find_n_gramms(string, n, k)
-    print(four_grams)
+    print("\n" + str(four_grams))
 
     print("\n\nAverage word length: " + str(average_words))
     print("Average sentence length: " + str(average_sentence))
 
     return len(sentences), nd, average_sentence, average_words, four_grams
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 print("task1\n\n")
-task1_text = 'Abc... Abc?! Abc!!! Mr. Abc: Abc, Abc. Mr., Abc?! Hello. My Name is Dasha. Hagimemashite!! '
+task1_text = 'Abc... Abc?! Abc!!! Mr. Abc: Abc, Abc. Mr., Abc?! Hello. My Name is Dasha. Hagimemashite!! Yoroshiku onegaishimasu!'
 N = 4
 K = 10
 Task1(task1_text, N, K)
 
-
+'''

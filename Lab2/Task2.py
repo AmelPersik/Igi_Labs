@@ -90,6 +90,7 @@ class CLI:
                     if answer == "yes":
                         exit()
 
-
+'''
 cli = CLI()
 cli.start()
+'''
