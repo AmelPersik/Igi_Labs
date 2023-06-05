@@ -49,7 +49,7 @@ class B:
 class C(A, B):
     pass
 
-'''
+
 
 ser = Factory.create_serializer(XML_DATA_TYPE)
 #
@@ -84,4 +84,3 @@ g_s = ser.dumps(g)
 g_d = ser.loads(g_s)
 print(next(g_d))
 
-'''
