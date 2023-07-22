@@ -6,7 +6,7 @@ import math
 from .constants import PRIMITIVE_TYPES, UNSERIALIZABLE_DUNDER, \
     UNSERIALIZABLE_TYPES, UNSERIALIZABLE_CODE_TYPES, \
     ITERATOR_TYPE, CODE_TYPE, CELL_TYPE, MODULE_TYPE, FUNCTION_TYPE, \
-    BYTES_TYPE, CLASS_TYPE, OBJ_TYPE, TUPLE_TYPE, SET_TYPE
+    BYTES_TYPE, CLASS_TYPE, OBJ_TYPE, TUPLE_TYPE, SET_TYPE, PROP_TYPE
 from .supportive import get_fathers_class_for_method
 
 from types import ModuleType, CellType, FunctionType, \
@@ -36,6 +36,8 @@ class Converter:
             return cls._encode_class(obj)
         if cls.is_iterable(obj):
             return cls._encode_iterator(obj)
+        if isinstance(obj, property):
+            return cls._encode_property(obj)
         if isinstance(obj, CodeType):
             return cls._encode_code(obj)
         if isinstance(obj, object):
@@ -49,7 +51,6 @@ class Converter:
             return type(obj)((cls.deconvert(item) for item in obj))
         if isinstance(obj, dict):
             type_to_decode = cls._get_type(obj)
-
             if type_to_decode is None:
                 return {key: cls.deconvert(value) for key, value in obj.items()}
             if type_to_decode == BYTES_TYPE:
@@ -68,6 +69,8 @@ class Converter:
                 return cls._decode_module(obj)
             if type_to_decode in (TUPLE_TYPE, SET_TYPE):
                 return cls._decode_collection(obj)
+            if type_to_decode == PROP_TYPE:
+                return cls._decode_property(obj)
             if type_to_decode == OBJ_TYPE:
                 return cls._decode_object(obj)
         return obj
@@ -77,6 +80,11 @@ class Converter:
         data = cls._get_data(obj)
         collection = getattr(builtins, cls._get_type(obj).lower())
         return collection((cls.deconvert(item) for item in data))
+
+    @classmethod
+    def _decode_property(cls, obj):
+        data = cls._get_data(obj)
+        return property(cls.deconvert(data['fget']), cls.deconvert(data['fset']), cls.deconvert(data['fdel']))
 
     @classmethod
     def _decode_module(cls, obj):
@@ -177,6 +185,14 @@ class Converter:
         return cls._create_dict(code_dict, CODE_TYPE)
 
     @classmethod
+    def _encode_property(cls, obj):
+        data = dict()
+        data["fget"] = cls.convert(obj.fget)
+        data["fset"] = cls.convert(obj.fset)
+        data["fdel"] = cls.convert(obj.fdel)
+        return cls._create_dict(data, PROP_TYPE)
+
+    @classmethod
     def _encode_iterator(cls, obj):
         data = list(map(cls.convert, obj))
         return cls._create_dict(data, ITERATOR_TYPE)
@@ -211,6 +227,7 @@ class Converter:
             }
         }
         return cls._create_dict(data, OBJ_TYPE)
+
 
 
     @classmethod

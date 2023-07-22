@@ -1,7 +1,5 @@
 from .constants import UNKNOWN_TYPE_ERROR
-
 from .converter import Converter
-
 
 class JsonSerializer:
     _converter = Converter()
@@ -58,6 +56,7 @@ class JsonSerializer:
             return None, start_index + 4
         elif string_obj[start_index] == '{':
             return cls._loads_dict(string_obj, start_index)
+
         raise Exception(UNKNOWN_TYPE_ERROR)
 
     @classmethod

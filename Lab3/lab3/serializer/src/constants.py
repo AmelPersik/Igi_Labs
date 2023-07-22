@@ -27,6 +27,7 @@ CLASS_TYPE = 'type'
 SET_TYPE = 'set'
 DICT_TYPE = 'dict'
 TUPLE_TYPE = 'tuple'
+PROP_TYPE = 'property'
 
 
 UNSERIALIZABLE_DUNDER = (

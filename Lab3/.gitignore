@@ -4,5 +4,5 @@ lib/
 lib64
 pyvenv.cfg
 __pycache__/
-
+/amelpersik_custom_serializer.egg-info/
 /dist
